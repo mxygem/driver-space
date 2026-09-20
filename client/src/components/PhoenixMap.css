@@ -1,0 +1,122 @@
+.phoenix-map {
+  width: 100%;
+  height: auto;
+  display: block;
+  background: #fbf3e6;
+  border-radius: 12px;
+}
+
+.map-background {
+  fill: #fbf3e6;
+}
+
+.neighborhood-blob {
+  fill: #e4b98a;
+  opacity: 0.25;
+}
+
+.neighborhood-label {
+  fill: #9a6b3a;
+  font-size: 11px;
+  font-style: italic;
+  font-family: 'Georgia', serif;
+}
+
+.freeway {
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.freeway-interstate {
+  stroke: #c1440e;
+  stroke-width: 6;
+}
+
+.freeway-us {
+  stroke: #c98a1b;
+  stroke-width: 5;
+}
+
+.freeway-loop {
+  stroke: #1f7a6c;
+  stroke-width: 5;
+}
+
+.freeway-state {
+  stroke: #6b4fa0;
+  stroke-width: 4;
+}
+
+.central-avenue {
+  stroke: #a9762b;
+  stroke-width: 2.5;
+  stroke-dasharray: 6 5;
+}
+
+.city-dot {
+  fill: #3c2a1e;
+  stroke: #fbf3e6;
+  stroke-width: 1.5;
+}
+
+.city-label {
+  fill: #3c2a1e;
+  font-family: 'Segoe UI', system-ui, sans-serif;
+}
+
+.city-lg .city-label {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.city-md .city-label {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.city-sm .city-label {
+  font-size: 11px;
+  font-weight: 500;
+  fill: #6b503a;
+}
+
+.driver-marker-dot {
+  fill: #1f8f4e;
+  stroke: #ffffff;
+  stroke-width: 2;
+}
+
+.driver-marker-pulse {
+  fill: #1f8f4e;
+  opacity: 0.25;
+  animation: driver-pulse 2.4s ease-out infinite;
+  transform-origin: center;
+}
+
+.driver-marker-highlight .driver-marker-dot {
+  fill: #d1440e;
+}
+
+.driver-marker-highlight .driver-marker-pulse {
+  fill: #d1440e;
+}
+
+.driver-marker-label {
+  font-size: 12px;
+  font-weight: 700;
+  fill: #1c1c1c;
+  paint-order: stroke;
+  stroke: #ffffff;
+  stroke-width: 3px;
+}
+
+@keyframes driver-pulse {
+  0% {
+    transform: scale(0.6);
+    opacity: 0.35;
+  }
+  100% {
+    transform: scale(2.2);
+    opacity: 0;
+  }
+}
