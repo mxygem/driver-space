@@ -1,0 +1,27 @@
+# Optional convenience blueprint for hosting the API on Render
+# (https://render.com/docs/blueprint-spec). Not required — any Node host
+# with a persistent disk works. Import this repo on Render's dashboard as
+# a "Blueprint" to provision this automatically.
+services:
+  - type: web
+    name: driver-space-api
+    runtime: node
+    plan: free
+    rootDir: server
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: JWT_SECRET
+        generateValue: true
+      - key: CORS_ORIGIN
+        sync: false # set this to your Netlify site URL after it's created
+      - key: DATA_DIR
+        value: /var/data
+      - key: SEED_ADMIN_PASSWORD
+        sync: false
+      - key: SEED_DRIVER_PASSWORD
+        sync: false
+    disk:
+      name: driver-space-data
+      mountPath: /var/data
+      sizeGB: 1

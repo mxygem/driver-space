@@ -2,7 +2,10 @@ const Database = require('better-sqlite3');
 const path = require('path');
 const fs = require('fs');
 
-const dataDir = path.join(__dirname, '..', 'data');
+// DATA_DIR lets a host with a persistent disk (Render, Fly, a VPS, etc.)
+// point SQLite storage at that mounted volume instead of the app directory,
+// which is wiped/recreated on every deploy.
+const dataDir = process.env.DATA_DIR || path.join(__dirname, '..', 'data');
 fs.mkdirSync(dataDir, { recursive: true });
 
 const db = new Database(path.join(dataDir, 'driver-space.db'));

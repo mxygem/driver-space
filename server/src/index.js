@@ -11,7 +11,13 @@ const { signToken, requireAuth, requireRole } = require('./auth');
 seedIfEmpty();
 
 const app = express();
-app.use(cors());
+// CORS_ORIGIN can be a single origin or a comma-separated list (e.g. your
+// Netlify site plus a deploy-preview domain). Left unset, all origins are
+// allowed, which is fine for local dev but should be locked down in prod.
+const corsOrigin = process.env.CORS_ORIGIN
+  ? process.env.CORS_ORIGIN.split(',').map((origin) => origin.trim())
+  : true;
+app.use(cors({ origin: corsOrigin }));
 app.use(express.json());
 
 const PORT = process.env.PORT || 4000;

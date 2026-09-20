@@ -1,0 +1,12 @@
+[build]
+  base = "client"
+  command = "npm run build"
+  publish = "dist"
+
+# React Router uses client-side routes (/login, /driver, /admin) that don't
+# exist as real files, so any direct load or refresh must fall back to
+# index.html and let the client router take over.
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200

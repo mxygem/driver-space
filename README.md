@@ -66,9 +66,44 @@ The Vite dev server proxies `/api/*` to `http://localhost:4000`, so just
 open `http://localhost:5173`.
 
 For a production build: `npm run build` in `client/` produces static
-files in `client/dist/` that can be served by any static host, pointed at
-the API's real URL (update `API_BASE` in `client/src/api/client.js`, or
-serve the API from the same origin behind a reverse proxy).
+files in `client/dist/`.
+
+## Deploying: Netlify (client) + a separate host (API)
+
+**Netlify only serves static files** — it can't run the stateful
+Express/SQLite API long-term. So the split is: client on Netlify, API on
+any Node host that keeps a persistent disk (Render, Fly.io, Railway, a
+VPS, etc.). Deploy the API first, then the client.
+
+**1. API** — deploy `server/` to a Node host. A `render.yaml` blueprint is
+included as one easy option (Render's free tier supports a small
+persistent disk, which the app needs so the SQLite file survives
+restarts/deploys):
+
+- On Render: New → Blueprint → point at this repo → it reads `render.yaml`
+  and provisions the service + a 1GB disk mounted for the DB.
+- On any other host: run `npm install && npm start` from `server/`, set
+  `JWT_SECRET` to a real secret, and set `DATA_DIR` to a path on a
+  persistent volume (without one, the SQLite file — and every driver
+  account — is wiped on each redeploy).
+- Note the API's public URL once it's up (e.g.
+  `https://driver-space-api.onrender.com`).
+
+**2. Client on Netlify:**
+
+- New site from Git → this repo. `netlify.toml` at the repo root already
+  sets the base directory (`client`), build command (`npm run build`),
+  publish directory (`dist`), and the SPA redirect that `/login`,
+  `/driver`, and `/admin` need to load directly (React Router routes,
+  not real files).
+- Add one environment variable in Netlify's site settings:
+  `VITE_API_BASE_URL` = the API's URL from step 1 (no trailing slash, no
+  `/api` suffix — the client appends that itself).
+- Deploy. Netlify rebuilds on every push to this branch.
+
+**3. Connect them:** once the Netlify URL exists, set `CORS_ORIGIN` on the
+API host to that URL (comma-separate it with any Netlify deploy-preview
+domain you use) so the browser is allowed to call the API cross-origin.
 
 ## Notes / things to revisit before real-world use
 
@@ -82,3 +117,6 @@ serve the API from the same origin behind a reverse proxy).
   recognizable at-a-glance layout, not for turn-by-turn accuracy.
 - Auth is a simple username/password + JWT; there's no password reset flow
   or rate limiting on login yet.
+- `CORS_ORIGIN` (API) and `VITE_API_BASE_URL` (client) only matter once the
+  two are deployed separately (see Deploying, above) — leave both unset for
+  local dev.

@@ -1,4 +1,7 @@
-const API_BASE = '/api';
+// In dev, Vite proxies '/api' to the local server (see vite.config.js). In
+// production the client is typically hosted separately (e.g. Netlify) from
+// the API, so VITE_API_BASE_URL must point at the deployed API's origin.
+const API_BASE = `${import.meta.env.VITE_API_BASE_URL || ''}/api`;
 
 async function request(path, { method = 'GET', body, token } = {}) {
   const headers = { 'Content-Type': 'application/json' };
