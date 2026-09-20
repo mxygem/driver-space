@@ -1,0 +1,31 @@
+# Fly.io config for the API. Run `fly launch --no-deploy` from this
+# directory first — it'll detect the Dockerfile, ask to keep/replace the
+# app name below, and offer to create the volume (say yes, 1GB is plenty).
+# Then `fly deploy` for this and every later update.
+#
+# Keep this to a single machine in a single region: the SQLite file lives
+# on a volume that's tied to one machine, so scaling to multiple machines
+# or regions would split driver data across separate, unsynced disks.
+
+app = "driver-space-api" # fly launch will confirm or reassign this
+primary_region = "phx"   # Phoenix, AZ — change to whatever's closest to your drivers
+
+[build]
+
+[env]
+  PORT = "4000"
+  DATA_DIR = "/data"
+
+[[mounts]]
+  source = "driver_space_data"
+  destination = "/data"
+
+[http_service]
+  internal_port = 4000
+  force_https = true
+  auto_stop_machines = false
+  auto_start_machines = true
+  min_machines_running = 1
+
+[[vm]]
+  size = "shared-cpu-1x"

@@ -68,26 +68,37 @@ open `http://localhost:5173`.
 For a production build: `npm run build` in `client/` produces static
 files in `client/dist/`.
 
-## Deploying: Netlify (client) + a separate host (API)
+## Deploying: Netlify (client) + Fly.io (API)
 
 **Netlify only serves static files** — it can't run the stateful
 Express/SQLite API long-term. So the split is: client on Netlify, API on
-any Node host that keeps a persistent disk (Render, Fly.io, Railway, a
-VPS, etc.). Deploy the API first, then the client.
+Fly.io. Deploy the API first, then the client.
 
-**1. API** — deploy `server/` to a Node host. A `render.yaml` blueprint is
-included as one easy option (Render's free tier supports a small
-persistent disk, which the app needs so the SQLite file survives
-restarts/deploys):
+**1. API on Fly.io** — `server/Dockerfile` and `server/fly.toml` are
+already set up for this:
 
-- On Render: New → Blueprint → point at this repo → it reads `render.yaml`
-  and provisions the service + a 1GB disk mounted for the DB.
-- On any other host: run `npm install && npm start` from `server/`, set
-  `JWT_SECRET` to a real secret, and set `DATA_DIR` to a path on a
-  persistent volume (without one, the SQLite file — and every driver
-  account — is wiped on each redeploy).
-- Note the API's public URL once it's up (e.g.
-  `https://driver-space-api.onrender.com`).
+```bash
+cd server
+fly launch --no-deploy   # detects the Dockerfile; keep or rename the app,
+                          # pick a region, and say YES when it offers to
+                          # create a volume (1GB is plenty)
+fly secrets set JWT_SECRET=$(openssl rand -hex 32)
+fly secrets set SEED_ADMIN_PASSWORD=... SEED_DRIVER_PASSWORD=...
+fly deploy
+```
+
+Notes:
+- `fly.toml` sets `DATA_DIR=/data` and mounts the volume there, so the
+  SQLite file (and every driver account) survives redeploys — don't skip
+  creating the volume.
+- Keep this app to **one machine in one region**. The volume is tied to a
+  single machine; scaling out would split driver data across separate,
+  unsynced disks. `fly.toml` is set up this way already — just don't run
+  `fly scale count` past 1.
+- Note the API's public URL once it's up (`fly status`, or it's printed
+  after deploy) — something like `https://driver-space-api.fly.dev`.
+- You'll set `CORS_ORIGIN` as a secret too, but not until step 2 gives you
+  the Netlify URL to put in it.
 
 **2. Client on Netlify:**
 
@@ -101,9 +112,15 @@ restarts/deploys):
   `/api` suffix — the client appends that itself).
 - Deploy. Netlify rebuilds on every push to this branch.
 
-**3. Connect them:** once the Netlify URL exists, set `CORS_ORIGIN` on the
-API host to that URL (comma-separate it with any Netlify deploy-preview
-domain you use) so the browser is allowed to call the API cross-origin.
+**3. Connect them:** once the Netlify URL exists, point the API at it:
+
+```bash
+cd server
+fly secrets set CORS_ORIGIN=https://your-site.netlify.app
+```
+
+(Comma-separate it with any Netlify deploy-preview domain you use.) Setting
+a secret triggers a redeploy on its own.
 
 ## Notes / things to revisit before real-world use
 
