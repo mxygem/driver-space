@@ -63,69 +63,33 @@ export const FREEWAYS = [
     ],
   },
   {
-    id: 'loop101-agua-fria',
+    // Agua Fria (west) + Pima/Price (east) Freeways: a single, mostly
+    // straight-sided loop open at the south, not a smooth oval.
+    id: 'loop101',
     label: 'Loop 101',
     className: 'freeway freeway-loop',
+    shape: 'rounded',
     path: [
-      [33.68, -112.1],
-      [33.665, -112.15],
-      [33.63, -112.19],
-      [33.58, -112.22],
-      [33.52, -112.24],
-      [33.46, -112.245],
-      [33.43, -112.245],
+      [33.43, -112.245], // south end, near I-10 (Avondale)
+      [33.665, -112.245], // NW corner
+      [33.685, -112.03], // NE corner (top, near I-17)
+      [33.46, -111.875], // SE corner (east side, near Scottsdale/Tempe)
+      [33.31, -111.98], // south end, near I-10 (Ahwatukee)
     ],
   },
   {
-    id: 'loop101-pima',
-    label: 'Loop 101',
-    className: 'freeway freeway-loop',
-    path: [
-      [33.68, -112.1],
-      [33.685, -112.03],
-      [33.65, -111.95],
-      [33.6, -111.9],
-      [33.53, -111.875],
-      [33.46, -111.875],
-      [33.4, -111.9],
-      [33.34, -111.95],
-      [33.31, -111.98],
-    ],
-  },
-  {
-    id: 'loop202-redmountain',
+    // Red Mountain + Santan + South Mountain Freeways: one continuous
+    // rounded-rectangle loop open at the north/west, closing back near I-10.
+    id: 'loop202',
     label: 'Loop 202',
     className: 'freeway freeway-loop',
+    shape: 'rounded',
     path: [
-      [33.4, -111.93],
-      [33.42, -111.86],
-      [33.425, -111.8],
-      [33.415, -111.75],
-    ],
-  },
-  {
-    id: 'loop202-santan',
-    label: 'Loop 202',
-    className: 'freeway freeway-loop',
-    path: [
-      [33.415, -111.75],
-      [33.36, -111.74],
-      [33.3, -111.76],
-      [33.25, -111.8],
-      [33.22, -111.87],
-      [33.21, -111.95],
-    ],
-  },
-  {
-    id: 'loop202-southmtn',
-    label: 'Loop 202',
-    className: 'freeway freeway-loop',
-    path: [
-      [33.21, -111.95],
-      [33.24, -112.02],
-      [33.3, -112.08],
-      [33.37, -112.12],
-      [33.41, -112.14],
+      [33.4, -111.93], // west end, near I-10/US-60 (Tempe)
+      [33.42, -111.76], // NE corner
+      [33.2, -111.78], // SE corner
+      [33.2, -111.97], // SW corner
+      [33.41, -112.14], // north end, near I-10 (Laveen)
     ],
   },
   {

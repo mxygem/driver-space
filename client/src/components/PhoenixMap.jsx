@@ -1,11 +1,14 @@
 import { useMemo } from 'react';
 import { projectLatLng, MAP_VIEWBOX } from '../lib/geoProjection';
-import { smoothPathD } from '../lib/smoothPath';
+import { smoothPathD, roundedPolylineD } from '../lib/smoothPath';
 import { FREEWAYS, CENTRAL_AVENUE, CITIES, NEIGHBORHOODS } from '../data/phoenixMapData';
 import './PhoenixMap.css';
 
-function pathToSmoothD(path) {
-  return smoothPathD(path.map(([lat, lng]) => projectLatLng(lat, lng)));
+const LOOP_CORNER_RADIUS = 55;
+
+function pathToD(path, shape) {
+  const points = path.map(([lat, lng]) => projectLatLng(lat, lng));
+  return shape === 'rounded' ? roundedPolylineD(points, LOOP_CORNER_RADIUS) : smoothPathD(points);
 }
 
 /**
@@ -14,10 +17,10 @@ function pathToSmoothD(path) {
  */
 export default function PhoenixMap({ markers = [], onMarkerClick, highlightMarkerId, className = '' }) {
   const freewayLines = useMemo(
-    () => FREEWAYS.map((fwy) => ({ ...fwy, d: pathToSmoothD(fwy.path) })),
+    () => FREEWAYS.map((fwy) => ({ ...fwy, d: pathToD(fwy.path, fwy.shape) })),
     []
   );
-  const centralAveD = useMemo(() => pathToSmoothD(CENTRAL_AVENUE.path), []);
+  const centralAveD = useMemo(() => pathToD(CENTRAL_AVENUE.path), []);
 
   return (
     <svg
