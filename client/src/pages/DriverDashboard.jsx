@@ -81,6 +81,34 @@ export default function DriverDashboard() {
     []
   );
 
+  // The toggle/interval above are local component state, so navigating away
+  // from this page and back (unmount + remount) would otherwise forget that
+  // you're still online server-side and stop sending location pings.
+  useEffect(() => {
+    let cancelled = false;
+    async function syncStatus() {
+      try {
+        const res = await api.getDriverStatus(token);
+        if (cancelled || !res.online) return;
+        setOnline(true);
+        setStatus('online');
+        if (res.lat != null && res.lng != null) {
+          setLastPosition({ id: user.id, name: user.display_name, lat: res.lat, lng: res.lng });
+        }
+        if (res.updatedAt) setLastSent(new Date(res.updatedAt));
+        sendLocationOnce();
+        intervalRef.current = setInterval(sendLocationOnce, UPDATE_INTERVAL_MS);
+      } catch (e) {
+        if (!cancelled) setError(e.message);
+      }
+    }
+    syncStatus();
+    return () => {
+      cancelled = true;
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   function handleToggle() {
     if (online) {
       goOffline();

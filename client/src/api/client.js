@@ -24,6 +24,7 @@ export const api = {
   login: (username, password) => request('/auth/login', { method: 'POST', body: { username, password } }),
   me: (token) => request('/auth/me', { token }),
   publicDrivers: () => request('/public/drivers'),
+  getDriverStatus: (token) => request('/driver/status', { token }),
   setDriverStatus: (token, online) =>
     request('/driver/status', { method: 'POST', token, body: { online } }),
   sendLocation: (token, lat, lng, accuracy) =>

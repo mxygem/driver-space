@@ -72,10 +72,10 @@ export default function PhoenixMap({ markers = [], onMarkerClick, highlightMarke
             onClick={() => onMarkerClick && onMarkerClick(marker)}
             style={{ cursor: onMarkerClick ? 'pointer' : 'default' }}
           >
-            <circle r="14" className="driver-marker-pulse" />
-            <circle r="7" className="driver-marker-dot" />
+            <circle r="22" className="driver-marker-pulse" />
+            <circle r="11" className="driver-marker-dot" />
             {marker.name && (
-              <text y="-18" textAnchor="middle" className="driver-marker-label">
+              <text y="-26" textAnchor="middle" className="driver-marker-label">
                 {marker.name}
               </text>
             )}

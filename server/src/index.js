@@ -80,6 +80,20 @@ app.get('/api/public/drivers', (req, res) => {
 
 // ---- driver ----
 
+app.get('/api/driver/status', requireAuth, requireRole('driver'), (req, res) => {
+  const row = db
+    .prepare('SELECT online, jittered_lat, jittered_lng, updated_at FROM driver_state WHERE user_id = ?')
+    .get(req.user.id);
+  if (!row) return res.json({ online: false });
+
+  res.json({
+    online: !!row.online,
+    lat: row.jittered_lat,
+    lng: row.jittered_lng,
+    updatedAt: row.updated_at,
+  });
+});
+
 app.post('/api/driver/status', requireAuth, requireRole('driver'), (req, res) => {
   const { online } = req.body || {};
   if (typeof online !== 'boolean') {
