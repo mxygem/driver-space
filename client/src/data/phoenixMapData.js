@@ -15,8 +15,9 @@ export const FREEWAYS = [
       [33.445, -112.2],
       [33.448, -112.1],
       [33.448, -112.05],
-      [33.42, -112.02],
-      [33.35, -111.98],
+      [33.42, -111.98],
+      [33.4, -111.94],
+      [33.37, -111.97],
       [33.25, -111.97],
       [33.15, -111.97],
     ],
@@ -85,10 +86,11 @@ export const FREEWAYS = [
     className: 'freeway freeway-loop',
     shape: 'rounded',
     path: [
-      [33.4, -111.93], // west end, near I-10/US-60 (Tempe)
+      [33.4, -111.94], // west end, near I-10/US-60 (Tempe)
       [33.42, -111.76], // NE corner
       [33.2, -111.78], // SE corner
       [33.2, -111.97], // SW corner
+      [33.28, -112.06], // curve point, so the closing run isn't a sharp straight line
       [33.41, -112.14], // north end, near I-10 (Laveen)
     ],
   },
