@@ -1,11 +1,11 @@
 :root {
-  --sand: #fbf3e6;
-  --sand-dark: #eddfc7;
-  --terracotta: #c1440e;
-  --saguaro: #1f7a6c;
-  --ink: #2f2620;
-  --ink-soft: #6b5b48;
-  --border: #d9c6a3;
+  --sand: #eaf1f6;
+  --sand-dark: #d7e6ef;
+  --terracotta: #2f6690;
+  --saguaro: #2a7a5e;
+  --ink: #1f2a35;
+  --ink-soft: #55697a;
+  --border: #c3d6e2;
   font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
   color: var(--ink);
   background: var(--sand);
@@ -80,7 +80,7 @@ a {
 
 .nav-link-button {
   background: none;
-  border: 1px solid rgba(251, 243, 230, 0.4);
+  border: 1px solid rgba(234, 241, 246, 0.4);
   border-radius: 6px;
   padding: 6px 10px;
   cursor: pointer;
@@ -208,7 +208,7 @@ button:disabled {
   position: absolute;
   cursor: pointer;
   inset: 0;
-  background-color: #c9bda3;
+  background-color: #b6c7d1;
   transition: 0.2s;
   border-radius: 30px;
 }
@@ -264,12 +264,12 @@ button:disabled {
 }
 
 .status-online {
-  background: rgba(31, 122, 108, 0.15);
+  background: rgba(42, 122, 94, 0.15);
   color: var(--saguaro);
 }
 
 .status-offline {
-  background: rgba(107, 91, 72, 0.15);
+  background: rgba(85, 105, 122, 0.15);
   color: var(--ink-soft);
 }
 

@@ -15,11 +15,10 @@ export const FREEWAYS = [
       [33.445, -112.2],
       [33.448, -112.1],
       [33.448, -112.05],
-      [33.43, -111.99],
-      [33.38, -111.965],
-      [33.3, -111.95],
-      [33.22, -111.93],
-      [33.15, -111.9],
+      [33.42, -112.02],
+      [33.35, -111.98],
+      [33.25, -111.97],
+      [33.15, -111.97],
     ],
   },
   {
@@ -64,17 +63,18 @@ export const FREEWAYS = [
   },
   {
     // Agua Fria (west) + Pima/Price (east) Freeways: a single, mostly
-    // straight-sided loop open at the south, not a smooth oval.
+    // straight-sided loop open at the south. The east (Pima/Price) side
+    // runs much further south than the west (Agua Fria) side before
+    // meeting I-10 again near Ahwatukee.
     id: 'loop101',
     label: 'Loop 101',
     className: 'freeway freeway-loop',
     shape: 'rounded',
     path: [
-      [33.43, -112.245], // south end, near I-10 (Avondale)
-      [33.665, -112.245], // NW corner
-      [33.685, -112.03], // NE corner (top, near I-17)
-      [33.46, -111.875], // SE corner (east side, near Scottsdale/Tempe)
-      [33.31, -111.98], // south end, near I-10 (Ahwatukee)
+      [33.43, -112.24], // south end, near I-10 (Avondale)
+      [33.68, -112.24], // NW corner
+      [33.685, -111.88], // NE corner (top, near Scottsdale)
+      [33.31, -111.95], // south end, near I-10 (Ahwatukee)
     ],
   },
   {

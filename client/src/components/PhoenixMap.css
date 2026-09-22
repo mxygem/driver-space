@@ -2,21 +2,21 @@
   width: 100%;
   height: auto;
   display: block;
-  background: #fbf3e6;
+  background: #eaf1f6;
   border-radius: 12px;
 }
 
 .map-background {
-  fill: #fbf3e6;
+  fill: #eaf1f6;
 }
 
 .neighborhood-blob {
-  fill: #e4b98a;
-  opacity: 0.25;
+  fill: #a9c6dd;
+  opacity: 0.3;
 }
 
 .neighborhood-label {
-  fill: #9a6b3a;
+  fill: #4a6b85;
   font-size: 11px;
   font-style: italic;
   font-family: 'Georgia', serif;
@@ -28,39 +28,39 @@
 }
 
 .freeway-interstate {
-  stroke: #c1440e;
+  stroke: #2f6690;
   stroke-width: 6;
 }
 
 .freeway-us {
-  stroke: #c98a1b;
+  stroke: #2f9e9e;
   stroke-width: 5;
 }
 
 .freeway-loop {
-  stroke: #1f7a6c;
+  stroke: #2a7a5e;
   stroke-width: 5;
 }
 
 .freeway-state {
-  stroke: #6b4fa0;
+  stroke: #6b5fb0;
   stroke-width: 4;
 }
 
 .central-avenue {
-  stroke: #a9762b;
+  stroke: #5c7a99;
   stroke-width: 2.5;
   stroke-dasharray: 6 5;
 }
 
 .city-dot {
-  fill: #3c2a1e;
-  stroke: #fbf3e6;
+  fill: #22303f;
+  stroke: #eaf1f6;
   stroke-width: 1.5;
 }
 
 .city-label {
-  fill: #3c2a1e;
+  fill: #22303f;
   font-family: 'Segoe UI', system-ui, sans-serif;
 }
 
@@ -77,7 +77,7 @@
 .city-sm .city-label {
   font-size: 11px;
   font-weight: 500;
-  fill: #6b503a;
+  fill: #4a6478;
 }
 
 .driver-marker-dot {
@@ -95,11 +95,11 @@
 }
 
 .driver-marker-highlight .driver-marker-dot {
-  fill: #d1440e;
+  fill: #c2185b;
 }
 
 .driver-marker-highlight .driver-marker-pulse {
-  fill: #d1440e;
+  fill: #c2185b;
 }
 
 .driver-marker-label {
