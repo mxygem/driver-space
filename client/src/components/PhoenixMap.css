@@ -90,6 +90,7 @@
   fill: #1f8f4e;
   opacity: 0.25;
   animation: driver-pulse 2.4s ease-out infinite;
+  transform-box: fill-box;
   transform-origin: center;
 }
 
