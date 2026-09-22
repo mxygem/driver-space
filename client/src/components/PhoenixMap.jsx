@@ -1,10 +1,11 @@
 import { useMemo } from 'react';
 import { projectLatLng, MAP_VIEWBOX } from '../lib/geoProjection';
+import { smoothPathD } from '../lib/smoothPath';
 import { FREEWAYS, CENTRAL_AVENUE, CITIES, NEIGHBORHOODS } from '../data/phoenixMapData';
 import './PhoenixMap.css';
 
-function pathToPoints(path) {
-  return path.map(([lat, lng]) => projectLatLng(lat, lng)).map(({ x, y }) => `${x},${y}`).join(' ');
+function pathToSmoothD(path) {
+  return smoothPathD(path.map(([lat, lng]) => projectLatLng(lat, lng)));
 }
 
 /**
@@ -13,10 +14,10 @@ function pathToPoints(path) {
  */
 export default function PhoenixMap({ markers = [], onMarkerClick, highlightMarkerId, className = '' }) {
   const freewayLines = useMemo(
-    () => FREEWAYS.map((fwy) => ({ ...fwy, points: pathToPoints(fwy.path) })),
+    () => FREEWAYS.map((fwy) => ({ ...fwy, d: pathToSmoothD(fwy.path) })),
     []
   );
-  const centralAvePoints = useMemo(() => pathToPoints(CENTRAL_AVENUE.path), []);
+  const centralAveD = useMemo(() => pathToSmoothD(CENTRAL_AVENUE.path), []);
 
   return (
     <svg
@@ -40,10 +41,10 @@ export default function PhoenixMap({ markers = [], onMarkerClick, highlightMarke
       })}
 
       {freewayLines.map((fwy) => (
-        <polyline key={fwy.id} points={fwy.points} className={fwy.className} fill="none" />
+        <path key={fwy.id} d={fwy.d} className={fwy.className} fill="none" />
       ))}
 
-      <polyline points={centralAvePoints} className={CENTRAL_AVENUE.className} fill="none" />
+      <path d={centralAveD} className={CENTRAL_AVENUE.className} fill="none" />
 
       {CITIES.map((city) => {
         const { x, y } = projectLatLng(city.lat, city.lng);
