@@ -83,7 +83,7 @@
 .driver-marker-dot {
   fill: #1f8f4e;
   stroke: #ffffff;
-  stroke-width: 3;
+  stroke-width: 6;
 }
 
 .driver-marker-pulse {
@@ -103,12 +103,12 @@
 }
 
 .driver-marker-label {
-  font-size: 14px;
+  font-size: 22px;
   font-weight: 700;
   fill: #1c1c1c;
   paint-order: stroke;
   stroke: #ffffff;
-  stroke-width: 3px;
+  stroke-width: 4px;
 }
 
 @keyframes driver-pulse {
