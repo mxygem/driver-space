@@ -106,9 +106,6 @@
   font-size: 18px;
   font-weight: 700;
   fill: #000000;
-  paint-order: stroke;
-  stroke: #ffffff;
-  stroke-width: 3px;
 }
 
 @keyframes driver-pulse {
