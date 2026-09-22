@@ -1,31 +1,31 @@
-# Fly.io config for the API. Run `fly launch --no-deploy` from this
-# directory first — it'll detect the Dockerfile, ask to keep/replace the
-# app name below, and offer to create the volume (say yes, 1GB is plenty).
-# Then `fly deploy` for this and every later update.
+# fly.toml app configuration file generated for server-noble-morning-9743 on 2026-09-19T22:41:29-07:00
 #
-# Keep this to a single machine in a single region: the SQLite file lives
-# on a volume that's tied to one machine, so scaling to multiple machines
-# or regions would split driver data across separate, unsynced disks.
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+#
 
-app = "driver-space-api" # fly launch will confirm or reassign this
-primary_region = "phx"   # Phoenix, AZ — change to whatever's closest to your drivers
-
-[build]
+app = 'server-noble-morning-9743'
+primary_region = 'lax'
 
 [env]
-  PORT = "4000"
-  DATA_DIR = "/data"
+  DATA_DIR = '/data'
 
+[build]
 [[mounts]]
-  source = "driver_space_data"
-  destination = "/data"
+  source = 'data'
+  destination = '/data'
+  auto_extend_size_threshold = 80
+  auto_extend_size_increment = '1GB'
+  auto_extend_size_limit = '10GB'
 
 [http_service]
   internal_port = 4000
   force_https = true
-  auto_stop_machines = false
+  auto_stop_machines = 'stop'
   auto_start_machines = true
-  min_machines_running = 1
+  min_machines_running = 0
+  processes = ['app']
 
 [[vm]]
-  size = "shared-cpu-1x"
+  memory = '1gb'
+  cpus = 1
+  memory_mb = 1024
